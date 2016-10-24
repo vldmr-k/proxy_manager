@@ -39,7 +39,18 @@ export  default class ProxyEdit extends Component {
     }
 
     onSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
+
+        RestApi.put('/api/proxy/' + this.props.params.proxy_id,
+            {
+                remote_addr: this.state.remote_addr,
+                remote_port: this.state.remote_port,
+                local_addr: this.state.local_addr,
+                local_port: this.state.local_port
+            }
+        ).then(response => {
+                console.log('response', response);
+        });
     }
 
     render() {

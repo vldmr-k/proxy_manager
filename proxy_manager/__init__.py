@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
 
+from flask_sqlalchemy import SQLAlchemy
+
 __version__ = '0.1'
 from flask import Flask, _app_ctx_stack
 import psycopg2
@@ -11,14 +13,9 @@ app = Flask('proxy_manager')
 app.config['SECRET_KEY'] = 'random'
 app.debug = True
 
-db = None
-
-try:
-    db = psycopg2.connect(database=DB_NAME, host=DB_HOST, port=DB_PORT, user=DB_USER, password=DB_PASSWORD)
-except TypeError, e:
-    print e.message
-    sys.exit()
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{}:{}@{}:{}/{}'.format(DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+db = SQLAlchemy(app)
 
 
 from proxy_manager.controllers import *

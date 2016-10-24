@@ -1,19 +1,30 @@
 # -*- coding: utf-8 -*-
-#!flask/bin/python
+from flask import abort
 
-from proxy_manager import app
+from proxy_manager import app, db
 from flask import jsonify
-from ..repository.proxy import Finder
+from flask import request
+from ..models.proxy import Proxy
 
-
-finder = Finder()
 
 @app.route('/api/proxies', methods=['GET'])
 def get_proxies():
-    proxy_list = finder.find_all(0, 20)
+    proxy_list = []
     return jsonify({'proxies': proxy_list})
 
 @app.route('/api/proxy/<int:proxy_id>', methods=['GET'])
 def get_proxy(proxy_id):
-    proxy = finder.find_by_id(proxy_id)
-    return jsonify({'proxy': proxy.to_dict()})
+    proxy = Proxy.query.filter_by(id=proxy_id).first()
+    return jsonify({'proxy': proxy.asdict()})
+
+@app.route('/api/proxy/<int:proxy_id>', methods=['PUT'])
+def put_proxy(proxy_id):
+    if not request.json:
+        abort(400)
+
+
+    proxy = db.session.query(Proxy).get(proxy_id)
+    proxy.remote_addr = request.json['remote_addr']
+    db.session.commit()
+
+    return jsonify({'proxy': proxy.asdict()})

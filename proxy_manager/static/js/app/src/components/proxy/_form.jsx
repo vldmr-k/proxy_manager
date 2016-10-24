@@ -17,52 +17,58 @@ export default class ProxyForm extends Component {
     }
 
     render() {
-        console.log('props',this.props);
+
         return (
             <form method="post" onSubmit={this.props.onSubmit}>
-                <div className="form-group">
-                    <label htmlFor="remote_addr" >Remote Addr</label>
-                    <input
-                        id="remote_addr"
-                        type="text"
-                        className="form-control"
-                        placeholder="120.0.0.1"
-                        value={this.props.remote_addr}
-                        onChange={this.props.onChange.bind(this, 'remote_addr')}
-                    />
+                <div className="row">
+                    <div className="col-sm-6">
+                        <div className="form-group">
+                            <label htmlFor="remote_addr" >Remote Addr</label>
+                            <input
+                                id="remote_addr"
+                                type="text"
+                                className="form-control"
+                                placeholder="120.0.0.1"
+                                value={this.props.remote_addr}
+                                onChange={this.props.onChange.bind(this, 'remote_addr')}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="remote_port" >Remote Port</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="remote_port"
+                                placeholder="8080" value={this.props.remote_port}
+                                onChange={this.props.onChange.bind(this, 'remote_port')}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="local_addr" >Local Addr</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="local_addr"
+                                placeholder="120.0.0.1"
+                                value={this.props.local_addr}
+                                onChange={this.props.onChange.bind(this, 'local_addr')}
+                            />
+
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="local_port" >Local Port</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="local_port"
+                                placeholder="8080"
+                                value={this.props.local_port}
+                                onChange={this.props.onChange.bind(this, 'local_port')}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="remote_port" >Remote Port</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="remote_port"
-                        placeholder="8080" value={this.props.remote_port}
-                        onChange={this.props.onChange.bind(this, 'remote_port')}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="local_addr" >Local Addr</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="local_addr"
-                        placeholder="120.0.0.1"
-                        value={this.props.local_addr}
-                        onChange={this.props.onChange.bind(this, 'local_addr')}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="local_port" >Local Port</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="local_port"
-                        placeholder="8080"
-                        value={this.props.local_port}
-                        onChange={this.props.onChange.bind(this, 'local_port')}
-                    />
-                </div>
+                <hr />
                 <div className="form-group">
                     <button type="submit" className="btn btn-default">Сохранить</button>
                 </div>

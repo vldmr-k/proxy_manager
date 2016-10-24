@@ -1,27 +1,26 @@
 from base_database import BaseDatabase
 
 class ProxyObject():
-    _id = None
-    _remote_addr = None
-    _remote_port = None
-    _local_addr = None
-    _local_port = None
-    _is_enabled = None
-    _last_check = None
+    id = None
+    remote_addr = None
+    remote_port = None
+    local_addr = None
+    local_port = None
+    is_enabled = None
+    last_check = None
 
     def __init__(self, id=None, remote_addr=None, remote_port=None, local_addr=None, local_port=None, is_enabled=0, last_check=None):
-        self._id = id
-        self._remote_addr = remote_addr
-        self._remote_port = remote_port
-        self._local_addr = local_addr
-        self._local_port = local_port
-        self._is_enabled = is_enabled
-        self._last_check = last_check
+        self.id = id
+        self.remote_addr = remote_addr
+        self.remote_port = remote_port
+        self.local_addr = local_addr
+        self.local_port = local_port
+        self.is_enabled = is_enabled
+        self.last_check = last_check
 
-    def to_dict(self):
-        return dict(id=self._id, remote_addr=self._remote_addr, remote_port=self._remote_port,
-                    local_addr=self._local_addr, local_port=self._local_port, is_enabled=self._is_enabled,
-                    last_check=self._last_check)
+    def getlist(self):
+        return self.__dict__
+
 
 
 class Finder(BaseDatabase):
@@ -32,7 +31,8 @@ class Finder(BaseDatabase):
             cur.execute("SELECT * FROM prx WHERE id = %s", [proxy_id])
             rec = cur.fetchone()
             obj = ProxyObject(id=rec[0], remote_addr=rec[1], remote_port=rec[2], local_addr=rec[3], local_port=rec[4], is_enabled=rec[5], last_check=rec[6])
-            return obj
+
+        return obj
 
     def find_all(self, page = 0, limit = 20):
         cur = self.get_connect().cursor()
@@ -43,7 +43,7 @@ class Finder(BaseDatabase):
 
         for rec in result:
             obj = ProxyObject(id=rec[0], remote_addr=rec[1], remote_port=rec[2], local_addr=rec[3], local_port=rec[4], is_enabled=rec[5], last_check=rec[6])
-            items.append(obj.to_dict())
+            items.append(obj.__dict__())
 
         return items
 

@@ -9,17 +9,19 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
+    chunkFilename: 'bundle.js',
     publicPath: '/build/'
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    /*new webpack.HotModuleReplacementPlugin()*/
   ],
   module: {
     loaders: [{
       test: /\.js[x]?$/,
-      loaders: ['react-hot', 'babel'],
-      include: path.join(__dirname, 'src')
+      loaders: ['babel'],
+      include: path.join(__dirname, 'src'),
+      exclude: /node_modules/
     }]
   }
 };

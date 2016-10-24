@@ -2,7 +2,6 @@ config.py
 proxy_manager.egg-info
 dist
 build
-.idea
 node_modules
 .idea/
 build/
