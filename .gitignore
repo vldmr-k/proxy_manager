@@ -1,0 +1,14 @@
+config.py
+proxy_manager.egg-info
+dist
+build
+.idea
+node_modules
+.idea/
+build/
+config.pyc
+dist/
+proxy_manager.egg-info/
+proxy_manager/
+runserver.py
+setup.py
