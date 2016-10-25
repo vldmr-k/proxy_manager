@@ -29,6 +29,7 @@
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-router": "^2.8.1",
-    "restful-js": "^0.5.2"
+    "restful-js": "^0.5.2",
+    "react-tag-autocomplete": "^5.0.4"
   }
 }

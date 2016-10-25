@@ -13,12 +13,38 @@ export  default class ProxyEdit extends Component {
             remote_addr: '',
             remote_port: '',
             local_addr: '',
-            local_port: ''
+            local_port: '',
+            selected_tags: [],
+            suggestions: []
         }
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.onHandleDeleteTag = this.onHandleDeleteTag.bind(this);
+        this.onHandleAdditionTag = this.onHandleAdditionTag.bind(this);
+        this.onHandleTagInputChange = this.onHandleTagInputChange.bind(this);
+    }
+
+    onHandleTagInputChange(input) {
+        RestApi.fetch('/api/tag/suggest/' + input).then(response => {
+            this.setState({suggestions: response.tags});
+        })
+    }
+
+    onHandleDeleteTag(i) {
+        let tags = this.state.selected_tags;
+        tags.splice(i, 1);
+        this.setState({selected_tags: tags});
+    }
+
+    onHandleAdditionTag(tag) {
+        let tags = this.state.selected_tags;
+        tags.push({
+            id: tags.length + 1,
+            name: tag.name
+        });
+        this.setState({selected_tags: tags});
     }
 
     componentDidMount() {
@@ -27,7 +53,8 @@ export  default class ProxyEdit extends Component {
                 remote_addr: response.proxy.remote_addr,
                 remote_port: response.proxy.remote_port,
                 local_addr: response.proxy.local_addr,
-                local_port: response.proxy.local_port
+                local_port: response.proxy.local_port,
+                selected_tags: response.tags
             })
         });
     }
@@ -40,18 +67,22 @@ export  default class ProxyEdit extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-
         RestApi.put('/api/proxy/' + this.props.params.proxy_id,
             {
                 remote_addr: this.state.remote_addr,
                 remote_port: this.state.remote_port,
                 local_addr: this.state.local_addr,
-                local_port: this.state.local_port
+                local_port: this.state.local_port,
+                tags: this.state.selected_tags
             }
         ).then(response => {
-                console.log('response', response);
+                alert("Запись сохранена!")
+        }).fail(x => {
+            let errors = x.responseJSON.errors;
+            alert("Ошибка: \n" + errors.join())
         });
     }
+
 
     render() {
         return (
@@ -66,6 +97,11 @@ export  default class ProxyEdit extends Component {
                     local_port={this.state.local_port}
                     onChange={this.onChange}
                     onSubmit={this.onSubmit}
+                    tags={this.state.selected_tags}
+                    suggestions={this.state.suggestions}
+                    onHandleDeleteTag={this.onHandleDeleteTag}
+                    onHandleAdditionTag={this.onHandleAdditionTag}
+                    onHandleTagInputChange={this.onHandleTagInputChange}
                 />
             </div>
         );

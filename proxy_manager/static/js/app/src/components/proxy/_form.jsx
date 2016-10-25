@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link , Route }  from 'react-router';
+import ReactTags from 'react-tag-autocomplete';
+
 
 export default class ProxyForm extends Component {
     constructor(props) {
@@ -14,6 +16,7 @@ export default class ProxyForm extends Component {
             local_addr: React.PropTypes.string,
             local_port: React.PropTypes.number,
         }
+
     }
 
     render() {
@@ -66,6 +69,17 @@ export default class ProxyForm extends Component {
                                 onChange={this.props.onChange.bind(this, 'local_port')}
                             />
                         </div>
+                    </div>
+                    <div className="col-sm-6">
+                        <label htmlFor="tags" >Теги</label>
+                        <ReactTags
+                            tags={this.props.tags}
+                            suggestions={this.props.suggestions}
+                            handleDelete={this.props.onHandleDeleteTag}
+                            handleAddition={this.props.onHandleAdditionTag}
+                            handleInputChange={this.props.onHandleTagInputChange}
+                        />
+
                     </div>
                 </div>
                 <hr />

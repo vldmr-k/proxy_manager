@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link , Route }  from 'react-router';
 import ProxyForm from './_form.jsx';
 import Breadcrumbs from '../breacbrumbs/Breadcrumbs.jsx';
-
+import RestApi from 'restful-js';
 
 export default class ProxyCreate extends Component {
 
@@ -29,6 +29,20 @@ export default class ProxyCreate extends Component {
 
     onSubmit(e) {
         e.preventDefault()
+
+        RestApi.post('/api/proxy',
+            {
+                remote_addr: this.state.remote_addr,
+                remote_port: this.state.remote_port,
+                local_addr: this.state.local_addr,
+                local_port: this.state.local_port
+            }
+        ).then(response => {
+                alert("Запись сохранена!")
+        }).fail(x => {
+            let errors = x.responseJSON.errors;
+            alert("Ошибка: \n" + errors.join())
+        });
     }
 
     render() {
@@ -44,6 +58,7 @@ export default class ProxyCreate extends Component {
                     local_port={this.state.local_port}
                     onChange={this.onChange}
                     onSubmit={this.onSubmit}
+                    onHandleTagInputChange={this.onHandleTagInputChange}
                 />
             </div>
         );

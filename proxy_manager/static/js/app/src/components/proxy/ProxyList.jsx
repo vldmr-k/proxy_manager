@@ -5,20 +5,35 @@ import { Link , Route }  from 'react-router';
 
 export default class ProxyList extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             proxy_list: []
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.loadProxyListFromServer = this.loadProxyListFromServer.bind(this);
+        this.onClickDelete = this.onClickDelete.bind(this);
+    }
+
+    loadProxyListFromServer() {
+        RestApi.fetch('/api/proxies').then(response => {
+            this.setState({"proxy_list": response.proxies});
+        });
     }
 
     componentDidMount() {
-        RestApi.fetch('/api/proxies').then(response => {
+        this.loadProxyListFromServer()
+    }
 
-            this.setState({"proxy_list": response.proxies});
-        });
+    onClickDelete(proxy_id) {
+        let that = this
+        let response = prompt("Вы подтверждаете удаление? Если да, напишите: yes");
+        if(response === 'yes') {
+            RestApi.destroy('/api/proxy/' + proxy_id).then(response => {
+                this.loadProxyListFromServer()
+            })
+        }
     }
 
     render() {
@@ -36,6 +51,7 @@ export default class ProxyList extends Component {
                     local_ip={item.local_port}
                     is_enabled={item.is_enabled}
                     last_ckeck_date={item.last_check_date}
+                    onClickDelete={this.onClickDelete}
                 />
             ));
         })

@@ -14,7 +14,7 @@ export default class ProxyItem extends Component {
                 <td className="text-center">{this.props.last_check_date == null ? "—" : this.props.last_check_date}</td>
                 <td className="text-center">
                     <Link className="btn btn-success btn-xs" to={`/proxy/edit/${this.props.id}`}>Edit</Link>&nbsp;|&nbsp;
-                    <Link className="btn btn-danger btn-xs" to={`/proxy/delete/${this.props.id}`}>Delete</Link>
+                    <button className="btn btn-danger btn-xs" onClick={this.props.onClickDelete.bind(this, this.props.id)}>Delete</button>
                 </td>
             </tr>
         )
