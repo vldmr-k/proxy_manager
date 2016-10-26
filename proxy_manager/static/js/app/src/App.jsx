@@ -12,11 +12,12 @@ export default class App extends Component {
                         </div>
                         <div id="navbar" className="navbar-collapse collapse">
                             <ul className="nav navbar-nav">
-                                <li className="active">
+                                <li>
                                     <Link to="/">Proxy List</Link>
                                 </li>
-                                <li><a href="#about">Account</a></li>
-                                <li><a href="#contact">Group</a></li>
+                                <li activeClassName="active">
+                                    <Link activeClassName="active" to="/tags">Tags</Link>
+                                </li>
                             </ul>
                         </div>
                     </div>

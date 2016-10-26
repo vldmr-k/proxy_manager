@@ -73,6 +73,7 @@ export default class ProxyList extends Component {
                         <th>Local Port</th>
                         <th>Enabled</th>
                         <th>Last Check Date</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>

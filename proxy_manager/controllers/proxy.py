@@ -65,6 +65,9 @@ def put_proxy(proxy_id):
 
         if 'tags' in request.json:
             tags = request.json['tags']
+            for item in tags:
+                tag = Tag.query.get(item['id'])
+                proxy.tags.append(tag)
 
         db.session.commit()
     except ValueError, e:
