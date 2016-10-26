@@ -41,7 +41,7 @@ export  default class ProxyEdit extends Component {
     onHandleAdditionTag(tag) {
         let tags = this.state.selected_tags;
         tags.push({
-            id: tags.length + 1,
+            id: tag.id,
             name: tag.name
         });
         this.setState({selected_tags: tags});

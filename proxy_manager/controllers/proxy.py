@@ -63,9 +63,13 @@ def put_proxy(proxy_id):
         proxy.local_addr = request.json['local_addr']
         proxy.local_port = request.json['local_port']
 
+        #delete all tags
+        proxy.tags = []
+
         if 'tags' in request.json:
             tags = request.json['tags']
             for item in tags:
+                tag_id = item['id']
                 tag = Tag.query.get(item['id'])
                 proxy.tags.append(tag)
 

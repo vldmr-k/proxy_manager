@@ -3,7 +3,7 @@ import { Link , Route }  from 'react-router';
 import ReactTags from 'react-tag-autocomplete';
 
 
-export default class ProxyForm extends Component {
+class ProxyForm extends Component {
     constructor(props) {
         super(props);
 
@@ -90,3 +90,24 @@ export default class ProxyForm extends Component {
         );
     }
 }
+
+class ProxyForm extends Component {
+    constructor(props) {
+        super(props);
+
+        this.propType = {
+            onChange: React.PropTypes.func.isRequired,
+            onClickParse: React.PropTypes.func.isRequired,
+            source_proxy: React.PropTypes.string
+        }
+
+    }
+
+    render() {
+        return (
+            <textarea>{this.props.source_proxy}</textarea>
+        )
+    }
+}
+
+export { ProxyForm }
