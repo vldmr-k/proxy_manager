@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RestApi from 'restful-js';
 import Breadcrumbs from '../breacbrumbs/Breadcrumbs.jsx';
-import ProxyForm from  './_form.jsx';
+import { ProxyForm } from  './_form.jsx';
 
 export  default class ProxyEdit extends Component {
 

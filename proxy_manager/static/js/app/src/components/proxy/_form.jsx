@@ -11,6 +11,7 @@ class ProxyForm extends Component {
             errors: React.PropTypes.array.isRequired,
             onChange: React.PropTypes.func.isRequired,
             onSubmit: React.PropTypes.func.isRequired,
+            onHandleDeleteTag: React.PropTypes.func.isRequired,
             remote_addr: React.PropTypes.string,
             remote_port: React.PropTypes.number,
             local_addr: React.PropTypes.string,
@@ -91,23 +92,33 @@ class ProxyForm extends Component {
     }
 }
 
-class ProxyForm extends Component {
+class ProxyMultipleForm extends Component {
     constructor(props) {
         super(props);
 
         this.propType = {
             onChange: React.PropTypes.func.isRequired,
-            onClickParse: React.PropTypes.func.isRequired,
-            source_proxy: React.PropTypes.string
+            onSubmit: React.PropTypes.func.isRequired,
+            input: React.PropTypes.string
         }
 
     }
 
     render() {
         return (
-            <textarea>{this.props.source_proxy}</textarea>
+            <form method="post" onSubmit={this.props.onSubmit}>
+                <div className="row">
+                    <div className="col-sm-6">
+                        <textarea>{this.props.input}</textarea>
+                    </div>
+                </div>
+                <hr />
+                <div className="form-group">
+                    <button type="submit" className="btn btn-default">Сохранить</button>
+                </div>
+            </form>
         )
     }
 }
 
-export { ProxyForm }
+export { ProxyForm, ProxyMultipleForm }
