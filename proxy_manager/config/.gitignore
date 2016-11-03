@@ -8,4 +8,6 @@ build/
 config.pyc
 dist/
 proxy_manager.egg-info/
+proxy_manager/
+runserver.py
 setup.py
