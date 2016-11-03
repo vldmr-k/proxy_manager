@@ -1,2 +1,5 @@
 recursive-include proxy_manager *
+exclude proxy_manager/config/config.py
+global-exclude .gitignore
+
 prune proxy_manager/static/js/app/node_modules
