@@ -107,14 +107,23 @@ class ProxyMultipleForm extends Component {
     render() {
         return (
             <form method="post" onSubmit={this.props.onSubmit}>
+
                 <div className="row">
-                    <div className="col-sm-6">
-                        <textarea>{this.props.input}</textarea>
+                    <div className="col-sm-12">
+                        <div className="panel panel-default">
+                            <div className="panel-heading">Формат</div>
+                            <div className="panel-body">
+                                [source_addr];[source_port];[local_addr];[local_port];[tag1, tag2, tag3 ... tagN]
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-12">
+                        <textarea className="form-control" rows="12" value={this.props.input} onChange={this.props.onChange.bind(this, 'input')} />
                     </div>
                 </div>
                 <hr />
                 <div className="form-group">
-                    <button type="submit" className="btn btn-default">Сохранить</button>
+                    <button type="submit" className="btn btn-default">Parser</button>
                 </div>
             </form>
         )

@@ -4,16 +4,16 @@ import { Router, Route, Link, hashHistory, IndexRoute } from 'react-router';
 
 import App from  './App.jsx';
 import NoMatch from  './NoMatch.jsx';
-import { ProxyCreate, ProxyList, ProxyEdit } from "./components/proxy/index.jsx";
-import { TagList, TagCreate, TagEdit, ProxyMultipleCreate } from  "./components/tag/index.jsx";
+import { ProxyCreate, ProxyList, ProxyEdit, ProxyMultipleCreate } from "./components/proxy/index.jsx";
+import { TagList, TagCreate, TagEdit } from  "./components/tag/index.jsx";
 
 ReactDOM.render((
     (
         <Router history={hashHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={ProxyList} />
-                <Route path='proxy/create' component={ProxyCreate} />
                 <Route path='proxy/multiple_create' component={ProxyMultipleCreate} />
+                <Route path='proxy/create' component={ProxyCreate} />
                 <Route path="proxy/edit/:proxy_id" component={ProxyEdit}/>
                 <Route path='tags' component={TagList} />
                 <Route path="tag/create" component={TagCreate}/>

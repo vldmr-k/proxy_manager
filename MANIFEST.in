@@ -1,0 +1,2 @@
+recursive-include proxy_manager *
+prune proxy_manager/static/js/app/node_modules

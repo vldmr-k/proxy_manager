@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from sqlalchemy import func
+
 from flask import abort
 
 from proxy_manager import app, db
@@ -7,6 +9,7 @@ from flask import request
 
 from proxy_manager.models.tag import Tag
 from ..models.proxy import Proxy
+from ..models.tag import calc_hash
 
 
 @app.route('/api/proxies', methods=['GET'])
@@ -78,3 +81,44 @@ def put_proxy(proxy_id):
         return jsonify({'errors': [e.message]}), 400
 
     return jsonify({'proxy': proxy.asdict()})
+
+
+@app.route('/api/proxy/get_random', methods=["GET"], defaults = {"limit":1})
+@app.route('/api/proxy/get_random/<int:limit>', methods=["GET"])
+def get_proxy_random(limit):
+
+    if not request.headers.get('x-robot-limit') is None:
+        limit = int(request.headers.get('x-robot-limit'))
+
+    if limit <= 0:
+        abort(400)
+
+    query = Proxy.query.filter_by(is_enabled=1).order_by(func.random()).limit(limit)
+    records = query.all()
+
+    return jsonify({map(lambda x: (x.local_addr + ':' + x.local_port), records)})
+
+@app.route('/api/proxy/get_by_tag', methods=['GET'], defaults={"tags_text": None, "limit": 1})
+@app.route('/api/proxy/get_by_tag/<string:tags_text>/<int:limit>', methods=['GET'])
+@app.route('/api/proxy/get_by_tag/<string:tags_text>', methods=['GET'], defaults={"limit" : 1})
+def get_proxy_by_tag(tags_text, limit):
+
+    if not request.headers.get('x-robot-limit') is None:
+        limit = int(request.headers.get('x-robot-limit'))
+
+    if tags_text is None:
+        tags_text = request.headers.get('x-robot-tag')
+
+    if tags_text is None or len(tags_text) <= 0:
+        return "I get any tags", 400
+
+    if limit <= 0:
+        return "Limit must be positive int", 400
+
+    tags = tags_text.split(',')
+
+    query = Proxy.query.filter(Proxy.tags.any(Tag.hash.in_(map(lambda x: calc_hash(x), tags)))).filter_by(is_enabled=1).limit(limit)
+    records = query.all()
+
+    return jsonify({map(lambda x: (x.local_addr + ':' +x.local_port), records)})
+

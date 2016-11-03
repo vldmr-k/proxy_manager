@@ -62,7 +62,7 @@ export default class ProxyList extends Component {
                   <li><Link to="/">Home</Link></li>
                   <li class="active">Proxy List</li>
                 </ol>
-                <Link className="btn btn-success btn-xs" to="/proxy/create">Create</Link>
+                <Link className="btn btn-success btn-xs" to="/proxy/create">Create</Link>&nbsp;
                 <Link className="btn btn-success btn-xs" to="/proxy/multiple_create">Multiple Create</Link>
                 <table className="table table-striped">
                     <thead>
